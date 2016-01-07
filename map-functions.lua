@@ -1,4 +1,10 @@
-function loadMap(tileW, tileH, tilesetPath, tileString, quadInfo)
+function loadMap(path)
+  -- love.filesystem.load doesnt invoke a lua file. I returns just a function declaration
+  local f = love.filesystem.load(path) -- obtain a function
+  f() -- run a function
+end
+
+function newMap(tileW, tileH, tilesetPath, tileString, quadInfo)
   
   TileW = tileW
   TileH = tileH
