@@ -11,6 +11,7 @@ end
 
 Player = {x = 200, y = 710, speed = 150, img = nil}
 IsAlive = true
+Score = 0
 
 -- Timers
 -- We declare these here so we don't have to edit them multiple places
@@ -103,6 +104,15 @@ function love.update(dt)
     if enemy.y > 850 then -- remove enemy if is out of screen
       table.remove(Enemies, i)
     end
+
+    -- Enemy Collision with Bullets
+    for j,bullet in ipairs(Bullets) do
+      if CheckCollision(enemy.x, enemy.y, enemy.img:getWidth(), enemy.img:getHeight(), bullet.x, bullet.y, bullet.img:getWidth(), bullet.img:getHeight()) then
+        table.remove(Enemies, i)
+        table.remove(Bullets, j)
+        Score = Score + 1
+      end
+    end
     
     -- Enemy Collision with Player
     if CheckCollision(enemy.x, enemy.y, enemy.img:getWidth(), enemy.img:getHeight(), Player.x, Player.y, Player.img:getWidth(), Player.img:getHeight()) and IsAlive then
@@ -119,6 +129,10 @@ function love.draw()
   else
     love.graphics.print('Press R to Restart', love.graphics:getWidth()/2-50, love.graphics:getHeight()/2-10)
   end
+
+  -- Drawing Score
+  love.graphics.setColor(255, 255, 255)
+  love.graphics.print("SCORE: " .. tostring(Score), 10, 10)
 
   -- Drawing Bullets
   for i,bullet in ipairs(Bullets) do
