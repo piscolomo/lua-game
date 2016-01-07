@@ -26,6 +26,7 @@ Bullets = {} -- array of current bullets being drawn and updated
 Enemies = {}
 
 function love.load()
+  Background = love.graphics.newImage("assets/bg.png")
   Player.img = love.graphics.newImage("assets/plane.png")
   BulletImg = love.graphics.newImage("assets/bullet.png")
   EnemyImg = love.graphics.newImage('assets/enemy.png')
@@ -123,6 +124,9 @@ function love.update(dt)
 end
 
 function love.draw()
+  -- Background
+  love.graphics.draw(Background)
+
   -- Drawing Airplane
   if IsAlive then
     love.graphics.draw(Player.img, Player.x, Player.y)
