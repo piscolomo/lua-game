@@ -1,20 +1,22 @@
 function love.load()
-  -- This is a Subtable
-  MyGlobalTable = { 
-    { 'Stuff inside a sub-table', 'More stuff inside a sub-table' },
-    { 'Stuff inside the second sub-table', 'Even more stuff' }
-  }
+  Tileset = love.graphics.newImage('countryside.png')
+  
+  local tileW, tileH = 32,32
+  local tilesetW, tilesetH = Tileset:getWidth(), Tileset:getHeight()
+  
+  GrassQuad = love.graphics.newQuad(0,  0, tileW, tileH, tilesetW, tilesetH)
+  BoxQuad = love.graphics.newQuad(32, 0, tileW, tileH, tilesetW, tilesetH)
+  FlowersQuad = love.graphics.newQuad(0, 32, tileW, tileH, tilesetW, tilesetH)
 end
 
 function love.draw()
-  -- inpairs is helpful for iterate in table that has subtables
-  for i,subtable in ipairs(MyGlobalTable) do
-    for j,elem in ipairs(subtable) do
-      love.graphics.print(elem, 100 * i, 50 * j)
-    end
-  end
+  love.graphics.draw(Tileset, GrassQuad, 368, 268)
+  love.graphics.draw(Tileset, GrassQuad, 400, 268)
+  love.graphics.draw(Tileset, GrassQuad, 432, 268)
+  love.graphics.draw(Tileset, GrassQuad, 368, 300)
+  love.graphics.draw(Tileset, BoxQuad  , 400, 300)
+  love.graphics.draw(Tileset, GrassQuad, 432, 300)
+  love.graphics.draw(Tileset, FlowersQuad, 368, 332)
+  love.graphics.draw(Tileset, GrassQuad, 400, 332)
+  love.graphics.draw(Tileset, GrassQuad, 432, 332)
 end
-
---ipairs will not iterate over the values that aren’t indexed with a number, 
---and will stop on the first nil it finds. If you need to iterate over a table 
---with non-numerical values, or with nil values in some cells, use pairs instead of ipairs.
