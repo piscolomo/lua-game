@@ -1,4 +1,5 @@
 local sti = require "sti"
+local bump = require "bump"
 
 function love.load()
   love.graphics.setBackgroundColor(225, 153, 0)
