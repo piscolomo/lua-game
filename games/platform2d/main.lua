@@ -1,4 +1,9 @@
+local sti = require "sti"
+
 function love.load()
+  love.graphics.setBackgroundColor(225, 153, 0)
+  Map = sti.new("maps/map.lua")
+
   Character = {
     sprites = {
       left = love.graphics.newImage("assets/gripe_run_left.png"),
@@ -22,6 +27,8 @@ function love.load()
 end
 
 function love.update(dt)
+  Map:update(dt)
+
   if not Idle then
     Timer = Timer + dt
     if Timer > 0.2 then
@@ -58,5 +65,6 @@ function love.keyreleased(key)
 end
 
 function love.draw()
+  Map:draw()
   love.graphics.draw(Character.sprites[Direction], Quads[Direction][Iteration], Character.x, Character.y)
 end

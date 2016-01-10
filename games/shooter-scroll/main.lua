@@ -18,7 +18,7 @@ Score = 0
 CanShoot = true
 CanShootTimerMax = 0.2 
 CanShootTimer = CanShootTimerMax
-EnemyTimerMax = 2
+EnemyTimerMax = 1
 EnemyTimer = EnemyTimerMax
 
 -- Entity Storage
@@ -101,7 +101,7 @@ function love.update(dt)
 
   -- Enemy Movement
   for i,enemy in ipairs(Enemies) do
-    enemy.y = enemy.y + (200 * dt)
+    enemy.y = enemy.y + (300 * dt)
     if enemy.y > 850 then -- remove enemy if is out of screen
       table.remove(Enemies, i)
     end
