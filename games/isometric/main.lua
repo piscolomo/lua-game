@@ -1,7 +1,6 @@
 local bump = require "bump"
 
 local world = bump.newWorld()
-local cols_len = 0 -- how many collisions are happening
 
 local player = { x = 50, y = 50, w = 20, h = 20, speed = 80 }
 local blocks = {}
@@ -18,7 +17,6 @@ local function drawPlayer()
   drawBox(player, 0, 255, 0)
 end
 
-
 -- Functions
 local function addBlock(x,y,w,h)
   local block = {x=x,y=y,w=w,h=h}
@@ -27,6 +25,22 @@ local function addBlock(x,y,w,h)
 end
 
 local function updatePlayer(dt)
+  local dx, dy = 0, 0
+
+  if love.keyboard.isDown('right') then
+    dx = player.speed * dt
+  elseif love.keyboard.isDown('left') then
+    dx = -player.speed * dt
+  end
+  if love.keyboard.isDown('down') then
+    dy = player.speed * dt
+  elseif love.keyboard.isDown('up') then
+    dy = -player.speed * dt
+  end
+
+  if dx ~= 0 or dy ~= 0 then
+    player.x, player.y, cols, cols_len = world:move(player, player.x + dx, player.y + dy)
+  end
 end
 
 local function drawBlocks()
@@ -36,7 +50,7 @@ local function drawBlocks()
 end
 
 -- Callbacks
-function love:load()
+function love.load()
   world:add(player, player.x, player.y, player.w, player.h)
 
   addBlock(0,       0,     800, 32)
@@ -53,12 +67,11 @@ function love:load()
   end
 end
 
-function love:update(dt)
-  cols_len = 0
-  --updatePlayer(dt)
+function love.update(dt)
+  updatePlayer(dt)
 end
 
-function love:draw()
+function love.draw()
   drawBlocks()
   drawPlayer()
 end
